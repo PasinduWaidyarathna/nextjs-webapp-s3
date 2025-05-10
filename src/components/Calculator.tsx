@@ -1,36 +1,38 @@
-"use client"
+"use client";
 
-import { useState } from "react"
-import Display from "./Display"
-import ButtonGrid from "./button-grid"
+import { useState } from "react";
+import Display from "./Display";
+import ButtonGrid from "./button-grid";
 
 export default function Calculator() {
-  const [input, setInput] = useState<string>("")
-  const [result, setResult] = useState<string>("")
+  const [input, setInput] = useState<string>("");
+  const [result, setResult] = useState<string>("");
 
   const handleButtonClick = (value: string) => {
     switch (value) {
       case "=":
         try {
           // Using Function constructor to safely evaluate the expression
-          const calculatedResult = new Function(`return ${input}`)()
-          setResult(String(calculatedResult))
+          const calculatedResult = new Function(`return ${input}`)();
+          setResult(String(calculatedResult));
         } catch (error) {
-          setResult("Error")
+          // Using underscore to indicate unused parameter
+          console.error(error);
+          setResult("Error"+error);
         }
-        break
+        break;
       case "C":
-        setInput("")
-        setResult("")
-        break
+        setInput("");
+        setResult("");
+        break;
       case "←":
-        setInput(input.slice(0, -1))
-        break
+        setInput(input.slice(0, -1));
+        break;
       default:
-        setInput((prev) => prev + value)
-        break
+        setInput((prev) => prev + value);
+        break;
     }
-  }
+  };
 
   return (
     <div className="w-full max-w-md mx-auto bg-white rounded-2xl shadow-lg overflow-hidden">
@@ -39,5 +41,5 @@ export default function Calculator() {
       </div>
       <ButtonGrid onButtonClick={handleButtonClick} />
     </div>
-  )
+  );
 }
